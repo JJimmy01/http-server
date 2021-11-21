@@ -4,7 +4,6 @@ import (
 	"context"
 	"encoding/json"
 	"github.com/gogf/gf/os/glog"
-	pb "http-server/message"
 	"net/http"
 	"os"
 	"os/signal"
@@ -23,7 +22,7 @@ func (healthzHandler) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 		respHeader.Set(k, req.Header.Get(k))
 	}
 	w.WriteHeader(http.StatusOK)
-	res, _ := json.Marshal(pb.RestReply{Code: "200", Msg: "Ok", Data: nil})
+	res, _ := json.Marshal(RestReply{Code: "200", Msg: "Ok", Data: nil})
 	_, err := w.Write(res)
 	if err != nil {
 		return
