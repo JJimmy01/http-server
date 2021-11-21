@@ -4,7 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"github.com/gogf/gf/os/glog"
-	pb "jimmy.com/http-server/message"
+	pb "http-server/message"
 	"net/http"
 	"os"
 	"os/signal"
@@ -54,7 +54,8 @@ func main() {
 		if err := server.Shutdown(context.Background()); err != nil {
 			glog.Info("HTTP Server Shutdown: %v", err)
 		}
-
 	}(graceQuitChan, idleConnsClosed)
+
+	glog.Info("HTTP Server start serving at 8080")
 	glog.Fatal(server.ListenAndServe())
 }

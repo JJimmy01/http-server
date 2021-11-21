@@ -1,4 +1,4 @@
-module jimmy.com/http-server
+module http-server
 
 go 1.17
 

@@ -10,6 +10,7 @@ COPY go.sum ./
 RUN go mod download
 
 COPY *.go ./
+COPY message /usr/local/go/src/http-server/
 RUN go build -o /http-server
 
 ##
