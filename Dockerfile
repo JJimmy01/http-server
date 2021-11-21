@@ -15,7 +15,7 @@ RUN go build -o /http-server
 ##
 ## Deploy
 ##
-FROM centos
+FROM gcr.io/distroless/base-debian10
 ENV VERSION v1.0.0
 
 WORKDIR /

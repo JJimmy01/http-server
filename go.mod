@@ -2,7 +2,10 @@ module jimmy.com/http-server
 
 go 1.17
 
-require github.com/gogf/gf v1.16.6
+require (
+	github.com/gogf/gf v1.16.6
+	google.golang.org/protobuf v1.26.0
+)
 
 require (
 	github.com/fatih/color v1.12.0 // indirect

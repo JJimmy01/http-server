@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+import "google/protobuf/any.proto";
+
+option go_package = "./";
+
+message RestReply {
+  string code = 1;
+  string msg = 2;
+  google.protobuf.Any data = 3;
+}
+
+
