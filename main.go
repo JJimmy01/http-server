@@ -18,15 +18,8 @@ func (healthzHandler) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 	respHeader.Set("Access-Control-Allow-Origin", "*")             //允许访问所有域
 	respHeader.Add("Access-Control-Allow-Headers", "Content-Type") //header的类型
 	respHeader.Set("content-type", "application/json")
-	for k := range req.Header {
-		respHeader.Set(k, req.Header.Get(k))
-	}
 	w.WriteHeader(http.StatusOK)
-	res, _ := json.Marshal(RestReply{Code: "200", Msg: "Ok", Data: nil})
-	_, err := w.Write(res)
-	if err != nil {
-		return
-	}
+	json.NewEncoder(w).Encode(RestReply{Code: "200", Msg: "Ok", Data: nil})
 	glog.Infof("Req IP %s  HttpCode %d", req.RemoteAddr, http.StatusOK)
 }
 
@@ -51,10 +44,12 @@ func main() {
 	go func(graceQuitChan chan os.Signal, closeNotifyChan chan struct{}) {
 		<-graceQuitChan
 		if err := server.Shutdown(context.Background()); err != nil {
-			glog.Info("HTTP Server Shutdown: %v", err)
+			glog.Infof("HTTP Server Shutdown: %v", err)
 		}
+		close(idleConnsClosed)
 	}(graceQuitChan, idleConnsClosed)
 
 	glog.Info("HTTP Server start serving at 8080")
 	glog.Fatal(server.ListenAndServe())
+	<-idleConnsClosed
 }
