@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"github.com/gogf/gf/os/glog"
+	"http-server/message"
 	"net/http"
 	"os"
 	"os/signal"
@@ -19,7 +20,10 @@ func (healthzHandler) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 	respHeader.Add("Access-Control-Allow-Headers", "Content-Type") //header的类型
 	respHeader.Set("content-type", "application/json")
 	w.WriteHeader(http.StatusOK)
-	json.NewEncoder(w).Encode(RestReply{Code: "200", Msg: "Ok", Data: nil})
+	err := json.NewEncoder(w).Encode(message.RestReply{Code: "200", Msg: "Ok", Data: nil})
+	if err != nil {
+		return
+	}
 	glog.Infof("Req IP %s  HttpCode %d", req.RemoteAddr, http.StatusOK)
 }
 
